@@ -1,0 +1,15 @@
+C:\Users\ADMIN\source\repos\Registro\Registro\bin\Debug\Registro.exe.config
+C:\Users\ADMIN\source\repos\Registro\Registro\bin\Debug\Registro.exe
+C:\Users\ADMIN\source\repos\Registro\Registro\bin\Debug\Registro.pdb
+C:\Users\ADMIN\source\repos\Registro\Registro\bin\Debug\Registro.xml
+C:\Users\ADMIN\source\repos\Registro\Registro\obj\Debug\Registro.vbproj.AssemblyReference.cache
+C:\Users\ADMIN\source\repos\Registro\Registro\obj\Debug\Registro.Form1.resources
+C:\Users\ADMIN\source\repos\Registro\Registro\obj\Debug\Registro.Resources.resources
+C:\Users\ADMIN\source\repos\Registro\Registro\obj\Debug\Registro.vbproj.GenerateResource.cache
+C:\Users\ADMIN\source\repos\Registro\Registro\obj\Debug\Registro.vbproj.CoreCompileInputs.cache
+C:\Users\ADMIN\source\repos\Registro\Registro\obj\Debug\Registro.exe
+C:\Users\ADMIN\source\repos\Registro\Registro\obj\Debug\Registro.xml
+C:\Users\ADMIN\source\repos\Registro\Registro\obj\Debug\Registro.pdb
+C:\Users\ADMIN\source\repos\Registro\Registro\bin\Debug\MySql.Data.dll
+C:\Users\ADMIN\source\repos\Registro\Registro\bin\Debug\MySql.Data.xml
+C:\Users\ADMIN\source\repos\Registro\Registro\obj\Debug\Registro.vbproj.CopyComplete
