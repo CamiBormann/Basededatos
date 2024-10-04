@@ -42,6 +42,9 @@ Partial Class Form1
         Me.cbComuna = New System.Windows.Forms.ComboBox()
         Me.BtnBuscar = New System.Windows.Forms.Button()
         Me.BtnGuardar = New System.Windows.Forms.Button()
+        Me.BtnActualizar = New System.Windows.Forms.Button()
+        Me.BtnBorrar = New System.Windows.Forms.Button()
+        Me.BtnBD = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -115,7 +118,7 @@ Partial Class Form1
         Me.GroupBox1.Controls.Add(Me.M)
         Me.GroupBox1.Location = New System.Drawing.Point(12, 152)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(326, 55)
+        Me.GroupBox1.Size = New System.Drawing.Size(309, 55)
         Me.GroupBox1.TabIndex = 7
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Sexo:"
@@ -201,19 +204,46 @@ Partial Class Form1
         '
         Me.BtnBuscar.Location = New System.Drawing.Point(251, 15)
         Me.BtnBuscar.Name = "BtnBuscar"
-        Me.BtnBuscar.Size = New System.Drawing.Size(96, 40)
+        Me.BtnBuscar.Size = New System.Drawing.Size(70, 34)
         Me.BtnBuscar.TabIndex = 15
         Me.BtnBuscar.Text = "Buscar"
         Me.BtnBuscar.UseVisualStyleBackColor = True
         '
         'BtnGuardar
         '
-        Me.BtnGuardar.Location = New System.Drawing.Point(107, 349)
+        Me.BtnGuardar.Location = New System.Drawing.Point(65, 346)
         Me.BtnGuardar.Name = "BtnGuardar"
-        Me.BtnGuardar.Size = New System.Drawing.Size(131, 40)
+        Me.BtnGuardar.Size = New System.Drawing.Size(101, 28)
         Me.BtnGuardar.TabIndex = 16
-        Me.BtnGuardar.Text = "Guardar MySql"
+        Me.BtnGuardar.Text = "Guardar"
         Me.BtnGuardar.UseVisualStyleBackColor = True
+        '
+        'BtnActualizar
+        '
+        Me.BtnActualizar.Location = New System.Drawing.Point(196, 346)
+        Me.BtnActualizar.Name = "BtnActualizar"
+        Me.BtnActualizar.Size = New System.Drawing.Size(107, 28)
+        Me.BtnActualizar.TabIndex = 17
+        Me.BtnActualizar.Text = "Actualizar"
+        Me.BtnActualizar.UseVisualStyleBackColor = True
+        '
+        'BtnBorrar
+        '
+        Me.BtnBorrar.Location = New System.Drawing.Point(65, 397)
+        Me.BtnBorrar.Name = "BtnBorrar"
+        Me.BtnBorrar.Size = New System.Drawing.Size(101, 28)
+        Me.BtnBorrar.TabIndex = 18
+        Me.BtnBorrar.Text = "Eliminar"
+        Me.BtnBorrar.UseVisualStyleBackColor = True
+        '
+        'BtnBD
+        '
+        Me.BtnBD.Location = New System.Drawing.Point(196, 397)
+        Me.BtnBD.Name = "BtnBD"
+        Me.BtnBD.Size = New System.Drawing.Size(107, 28)
+        Me.BtnBD.TabIndex = 19
+        Me.BtnBD.Text = "Ver Datos BD"
+        Me.BtnBD.UseVisualStyleBackColor = True
         '
         'Form1
         '
@@ -221,7 +251,10 @@ Partial Class Form1
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.BackColor = System.Drawing.SystemColors.ActiveCaption
-        Me.ClientSize = New System.Drawing.Size(350, 453)
+        Me.ClientSize = New System.Drawing.Size(329, 446)
+        Me.Controls.Add(Me.BtnBD)
+        Me.Controls.Add(Me.BtnBorrar)
+        Me.Controls.Add(Me.BtnActualizar)
         Me.Controls.Add(Me.BtnGuardar)
         Me.Controls.Add(Me.BtnBuscar)
         Me.Controls.Add(Me.cbComuna)
@@ -271,4 +304,7 @@ Partial Class Form1
     Friend WithEvents cbComuna As ComboBox
     Friend WithEvents BtnBuscar As Button
     Friend WithEvents BtnGuardar As Button
+    Friend WithEvents BtnActualizar As Button
+    Friend WithEvents BtnBorrar As Button
+    Friend WithEvents BtnBD As Button
 End Class
