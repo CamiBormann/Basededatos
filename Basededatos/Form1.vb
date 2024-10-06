@@ -7,7 +7,7 @@ Public Class Form1
             MessageBox.Show("Debe escribir un RUT, antes de realizar una búsqueda!!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             Return
         End If
-        BloqueoCampos(False)
+
         Dim persona As Persona = GetPersona(rut)
         If Not String.IsNullOrWhiteSpace(persona.RUT) Then
             txtRut.Text = persona.RUT
@@ -21,7 +21,7 @@ Public Class Form1
                     Masculino.Checked = True
                 Case "Femenino"
                     Femenino.Checked = True
-                Case "No especifica"
+                Case "No especif"
                     No.Checked = True
                 Case Else
                     Masculino.Checked = False
@@ -32,7 +32,7 @@ Public Class Form1
         Else
             Dim respuesta As Int32 = MessageBox.Show("RUT, NO encontrado!!! ¿Quiere registrarse?", "Advertencia", MessageBoxButtons.YesNo, MessageBoxIcon.Hand)
             If respuesta = vbYes Then
-                BloqueoCampos(True)
+
                 BorrarI()
             End If
 
@@ -42,23 +42,11 @@ Public Class Form1
 
     End Sub
 
-    Sub BloqueoCampos(ByVal a As Boolean)
-        txtNombre.Enabled = a
-        txtApellido.Enabled = a
-        cbComuna.Enabled = a
-        txtCiudad.Enabled = a
-        txtObservacion.Enabled = a
-        Masculino.Enabled = a
-        Femenino.Enabled = a
-        No.Enabled = a
-        BtnGuardar.Enabled = a
-    End Sub
-
     Private Sub BtnGuardar_Click(sender As Object, e As EventArgs) Handles BtnGuardar.Click
         Dim rut As String = txtRut.Text
         Dim nombre As String = txtNombre.Text
         Dim apellido As String = txtApellido.Text
-        Dim sexo As String
+        Dim sexo As String = "No especif"
         Dim comuna As String = cbComuna.SelectedItem?.ToString()
         Dim ciudad As String = txtCiudad.Text
         Dim observacion As String = txtObservacion.Text
@@ -67,15 +55,34 @@ Public Class Form1
             MessageBox.Show("Por favor, complete todos los campos!!", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return
         End If
-
+        If String.IsNullOrWhiteSpace(nombre) Then
+            MessageBox.Show("Por favor, ingrese un NOMBRE.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+        If String.IsNullOrWhiteSpace(apellido) Then
+            MessageBox.Show("Por favor, ingrese un APELLIDO.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
         If Masculino.Checked Then
             sexo = "Masculino"
         ElseIf Femenino.Checked Then
             sexo = "Femenino"
         ElseIf No.Checked Then
-            sexo = "No especifica"
+            sexo = "No especif"
         Else
             MessageBox.Show("Por favor, seleccione el sexo.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+        If String.IsNullOrWhiteSpace(comuna) Then
+            MessageBox.Show("Por favor, ingrese una COMUNA.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+        If String.IsNullOrWhiteSpace(ciudad) Then
+            MessageBox.Show("Por favor, ingrese una CIUDAD", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+        If String.IsNullOrWhiteSpace(observacion) Then
+            MessageBox.Show("Por favor, ingrese una OBSERVACIÓN.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return
         End If
 
@@ -114,7 +121,6 @@ Public Class Form1
         No.Checked = False
         cbComuna.SelectedIndex = -1
         txtRut.Focus()
-        BloqueoCampos(True)
     End Sub
 
     Sub BorrarI()
@@ -127,7 +133,7 @@ Public Class Form1
         No.Checked = False
         cbComuna.SelectedIndex = -1
         txtRut.Focus()
-        BloqueoCampos(True)
+
     End Sub
 
     Public Class Comuna
@@ -284,4 +290,116 @@ Public Class Form1
 
         Return persona
     End Function
+
+    Private Sub btnActualizar_Click(sender As Object, e As EventArgs) Handles btnActualizar.Click
+        Dim rut As String = txtRut.Text
+        Dim nombre As String = txtNombre.Text
+        Dim apellido As String = txtApellido.Text
+        Dim sexo As String
+        Dim comuna As String = cbComuna.SelectedItem?.ToString()
+        Dim ciudad As String = txtCiudad.Text
+        Dim observacion As String = txtObservacion.Text
+
+        If String.IsNullOrWhiteSpace(rut) Or String.IsNullOrWhiteSpace(nombre) Or String.IsNullOrWhiteSpace(apellido) Or String.IsNullOrWhiteSpace(comuna) Or String.IsNullOrWhiteSpace(ciudad) Then
+            MessageBox.Show("Por favor, complete todos los campos!!", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
+        If Masculino.Checked Then
+            sexo = "Masculino"
+        ElseIf Femenino.Checked Then
+            sexo = "Femenino"
+        ElseIf No.Checked Then
+            sexo = "No especif"
+        Else
+            MessageBox.Show("Por favor, seleccione el sexo.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+        Using conexion As New MySqlConnection(connectionString)
+            Try
+                conexion.Open()
+                Dim query As String = "UPDATE Personas SET Nombre=@nombre, Apellido=@apellido, Sexo=@sexo, Comuna=@comuna, Ciudad=@ciudad, Observacion=@observacion " &
+                                    "WHERE RUT= @rut"
+                Dim cmd As New MySqlCommand(query, conexion)
+                cmd.Parameters.AddWithValue("@rut", rut)
+                cmd.Parameters.AddWithValue("@nombre", nombre)
+                cmd.Parameters.AddWithValue("@apellido", apellido)
+                cmd.Parameters.AddWithValue("@sexo", sexo)
+                cmd.Parameters.AddWithValue("@comuna", Comuna)
+                cmd.Parameters.AddWithValue("@ciudad", ciudad)
+                cmd.Parameters.AddWithValue("@observacion", observacion)
+                cmd.ExecuteNonQuery()
+                MessageBox.Show("Datos actualizados exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                conexion.Close()
+            Catch ex As Exception
+                conexion.Close()
+            End Try
+        End Using
+        Borrar()
+
+    End Sub
+
+    Private Sub btnEliminar_Click(sender As Object, e As EventArgs) Handles btnEliminar.Click
+        Dim rut As String = txtRut.Text
+        If String.IsNullOrWhiteSpace(rut) Then
+            MessageBox.Show("Por favor, ingresa un RUT para eliminar a la persona deseada", "¡ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return
+        End If
+        If Not String.IsNullOrWhiteSpace(rut) Then
+            Using conexion As New MySqlConnection(connectionString)
+                Try
+                    conexion.Open()
+                    Dim query As String = "DELETE FROM Personas WHERE RUT= @rut"
+                    Dim cmd As New MySqlCommand(query, conexion)
+                    cmd.Parameters.AddWithValue("@rut", rut)
+                    cmd.ExecuteNonQuery()
+                    Borrar()
+                    MessageBox.Show($"Se a eliminado la persona con el rut: {rut}.", "¡ATENCIÓN!", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    conexion.Close()
+                Catch ex As Exception
+                    BorrarI()
+
+                    MessageBox.Show($"NO se a eliminado a la persona con el rut: {rut}.", "¡ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    conexion.Close()
+                End Try
+
+            End Using
+        End If
+
+    End Sub
+
+    Private Sub btnDatos_Click(sender As Object, e As EventArgs) Handles btnDatos.Click
+        Dim persona As New List(Of Persona)
+        persona = ListadodelPersonal()
+        Dim Mensaje As String = ""
+        For Each p As Persona In persona
+            Mensaje &= $"{p.RUT} {p.Nombre} {p.Apellido} " & vbNewLine
+        Next
+        MessageBox.Show(Mensaje, "Listado del personal", MessageBoxButtons.OK)
+    End Sub
+    Public Function ListadodelPersonal() As List(Of Persona)
+        Dim personas As New List(Of Persona)
+        Using conexion As New MySqlConnection(connectionString)
+            Try
+                conexion.Open()
+                Dim query As String = "SELECT * FROM personas ORDER BY Nombre"
+                Dim cmd As New MySqlCommand(query, conexion)
+                Dim resultado As MySqlDataReader
+                resultado = cmd.ExecuteReader
+                While (resultado.Read())
+                    Dim p As New Persona With {
+                        .Nombre = Convert.ToString(resultado("Nombre")),
+                        .Apellido = Convert.ToString(resultado("Apellido")),
+                        .RUT = Convert.ToString(resultado("RUT"))
+                    }
+                    personas.Add(p)
+                End While
+                conexion.Close()
+            Catch ex As Exception
+                conexion.Close()
+            End Try
+        End Using
+        Return personas
+    End Function
+
 End Class
